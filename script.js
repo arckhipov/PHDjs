@@ -1,7 +1,7 @@
 //add - прибавляем к дате сколько то дней
 moment.locale('ru');
 
-// console.log(moment().format('DD.MMMM.YYYY'));
+console.log(moment().format('DD.MMMM.YYYY'));
 // console.log(moment([2018, 11, 31]).format('DD.MM.YYYY'));
 // console.log(moment('2015/04/16', 'YYYY/MM/DD').format('DD. MMMM .YYYY'));
 //
