@@ -42,11 +42,30 @@ $(document).ready(function () {
         for (var i = 1; i <= mon; i++) {
             if (moment(date(i, month)).format('dddd') == 'суббота') {
                 arraySub[c] = moment(date(i, month)).format('DD');
-                $(h).append("<p class='qaz ui-button ui-corner-all ui-widget'>" + arraySub[c] + "</p>");
+                $(h).append("<p id=" + arraySub[c] + " class='qaz ui-button ui-corner-all ui-widget'>" + arraySub[c] + "</p>");
                 c++;
             }
         }
         // return arraySub;
+    }
+
+    function ret(h) {
+        $("p").click(function () {
+            $(this).each(function () {
+                var va = $(this).attr('id');
+                $.ajax(
+                    {
+                        url: 'fun.php',
+                        type:'post',//get
+                        data: {"id":va, "ii":h},
+                        success:function (d_data,s) {
+                            var result = $.parseJSON(d_data);
+                            alert(result);
+                        }
+                    }
+                );
+            })
+        })
     }
 
 // for (var cnt = 0; cnt < yymm.length; cnt++){
@@ -114,7 +133,9 @@ $(document).ready(function () {
             var h = "#tabs-12";
             sub(mon, 11, h);
         }
+        ret(h);
     });
+
 
     // jqueryUi
     $(".qaz").button();
