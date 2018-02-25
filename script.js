@@ -35,38 +35,42 @@ var lichSostav = [
     var mon = moment(yM(2018, 1), "YYYY-MM").daysInMonth();
     var arraySub = {};
     var month = 0;
+    var c, cntIdTabs, idTabs, id, aId, ty, aHref, idd;
 //
 //
     // добавляет даты
-    function addDate(date) {
-        $(".accordion").append("<p class='qaz'>" + date + " января</p>");
+    function addDate(date, m, c) {
+        $(".accordion").append("<p class='qaz'>" + date +  " " + m + "</p>");
         $(".accordion").append("<div class='bl'></div>");
     }
 
     //
     function sub(mon, month) {
-        var c = 0;
+        c = 0;
         for (var i = 1; i <= mon; i++) {
             if (moment(date(i, month)).format('dddd') == 'суббота') {
-                arraySub[c] = moment(date(i, month)).format('DD');
-              addDate(arraySub[c]);
+              arraySub[c] = moment(date(i, month)).format('DD');
+              ty = moment(date(i, month)).format('MMMM');
+              addDate(arraySub[c], ty, c);
               instructAdd();
               c++;
             }
         }
     }
-    function test() {
-        var cntIdTabs = 1;
-        for (var i = 0; i < 12; i++){
-            var idTabs = "tabs-"+cntIdTabs;
-            var id = "#"+idTabs;
+    function nazPhd(mon, month) {
+        sub(mon, month);
+        month++;
+    }
+    function test(aId) {
+        cntIdTabs = aId;
+             idTabs = "tabs-"+cntIdTabs;
+             id = "#"+idTabs;
             $("#tabs").append("<div id=" + idTabs + "></div>");
             $(id).append("<div class='accordion'></div>");
-            nazPhd(mon, i);
+            var h = aId - 1;
+            nazPhd(mon, h);
             cntIdTabs++;
-        }
     }
-    test();
 
     // добавляет инструктаров в блоки
     function instructAdd() {
@@ -81,10 +85,6 @@ var lichSostav = [
 
 
 // субботы месяца
-    function nazPhd(mon, month) {
-        sub(mon, month);
-        month++;
-    }
 
 
 
@@ -145,9 +145,27 @@ var lichSostav = [
 
 
     $("#tabs").tabs();
-    $( ".accordion" ).accordion({
-        active: false,
-        collapsible: true,
-        heightStyle: "content"
+
+    $('a').click(function () {
+        $(this).each(function () {
+            aHref = $(this).attr('href');
+
+            if(aHref.length == 7){
+                aId = aHref.substr(-1);
+                idd = "#tabs-"+aId;
+                $(idd).empty();
+            }else if(aHref.length == 8){
+                aId = aHref.substr(-2);
+                idd = "#tabs-"+aId;
+                $(idd).empty();
+            }
+            test(aId);
+        });
+        $( ".accordion" ).accordion({
+            active: false,
+            collapsible: true,
+            heightStyle: "content"
+        });
     });
+
 });
