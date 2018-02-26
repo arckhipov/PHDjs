@@ -84,64 +84,28 @@ var lichSostav = [
     }
 
 
-// субботы месяца
+    // function ret(h) {
+    //     $("p").click(function () {
+    //         $(this).each(function () {
+    //             var va = $(this).attr('id');
+    //             $.ajax(
+    //                 {
+    //                     url: 'fun.php',
+    //                     type:'post',//get
+    //                     data: {"id":va, "ii":h},
+    //                     success:function (d_data,s) {
+    //                         var result = $.parseJSON(d_data);
+    //                         alert(result);
+    //                     }
+    //                 }
+    //             );
+    //         })
+    //     })
+    // }
+//
 
-
-
-//
-//     function ret(h) {
-//         $("p").click(function () {
-//             $(this).each(function () {
-//                 var va = $(this).attr('id');
-//                 $.ajax(
-//                     {
-//                         url: 'fun.php',
-//                         type:'post',//get
-//                         data: {"id":va, "ii":h},
-//                         success:function (d_data,s) {
-//                             var result = $.parseJSON(d_data);
-//                             alert(result);
-//                         }
-//                     }
-//                 );
-//             })
-//         })
-//     }
-//
-// // for (var cnt = 0; cnt < yymm.length; cnt++){
-// //     console.log(arraySub[cnt]);
-// // }
-//     function gh(gj) {
-//         var t = "#tabs-"+gj;
-//         $(t).empty();
-//         $(t).append("<h3>Выберите субботу</h3>");
-//         var h = t;
-//         var hj = gj - 1;
-//         sub(mon, hj, h);
-//     }
-//     $('a').click(function () {
-//         $(this).each(function () {
-//             var number = $(this).attr('href');
-//             $("t").empty();
-//             if(number.length == 7){
-//                 var tyu = number.substr(-1);
-//             }else if(number.length == 8){
-//                 var tyu = number.substr(-2);
-//             }
-//             gh(tyu);
-//         })
-//
-//     })
-//
 //     // jqueryUi
     $(".qaz").button();
-//
-//     // $('.qaz').click(function () {
-//     //     if ($(".splin").css('display') == 'none')
-//     //         $(".splin").show();
-//     //     else
-//     //         $(".splin").hide();
-//     // });
 
 
     $("#tabs").tabs();
@@ -165,6 +129,33 @@ var lichSostav = [
             active: false,
             collapsible: true,
             heightStyle: "content"
+        });
+
+        // получаем день, месяц и ФИО
+        $('.bl > p').click(function () {
+            $(this).each(function () {
+                // получаем id блока с названием месяца (например tabs-1)
+                var tabs = $(this).closest("[id ^= tabs-]").attr("id");
+                // получаем ФИО
+                var fio = $(this).text();
+                var text = $(this).parent().prev().text();
+
+                $.ajax(
+                    {
+                        url: 'fun.php',
+                        type:'post',//get
+                        data: {
+                            "tabs":tabs,
+                            "fio":fio,
+                            "text":text
+                        },
+                        success:function (d_data,s) {
+                            var result = $.parseJSON(d_data);
+                            alert(result);
+                        }
+                    }
+                );
+            });
         });
     });
 
